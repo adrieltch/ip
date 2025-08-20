@@ -3,11 +3,13 @@ import java.util.*;
 public class Fatty {
     private static final String horizontalLine = "_".repeat(75);
 
-    private String list = "";
-    private int count = 0;
+    private Task[] taskList;
+    private int taskCount = 0;
 
     public static void main(String[] args) {
         Fatty fatty = new Fatty();
+        fatty.taskList = new Task[100];
+
         fatty.greet();
         fatty.echo();
     }
@@ -22,7 +24,7 @@ public class Fatty {
     private void echo() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = scanner.next();
 
             switch (input) {
                 case "bye":
@@ -33,6 +35,20 @@ public class Fatty {
                 case "list":
                     getList();
                     break;
+
+                case "mark":
+                    if (scanner.hasNextInt()) {
+                        int id = scanner.nextInt();
+                        mark(id); // mark task
+                        break;
+                    }
+
+                case "unmark":
+                    if (scanner.hasNextInt()) {
+                        int id = scanner.nextInt();
+                        unmark(id);
+                        break;
+                    }
 
                 default:
                     addList(input);
@@ -53,15 +69,36 @@ public class Fatty {
 
     private void getList(){
         System.out.println(horizontalLine + "\n"
-        + this.list + horizontalLine);
+        + "here are the tasks in your list:");
+
+        for (int i = 0; i < taskCount; i++) {
+            int taskNum = i + 1;
+            System.out.println(taskNum + "." + taskList[i]);
+        }
+
+        System.out.println(horizontalLine);
     }
 
     private void addList(String input) {
-        this.count++;
-        String temp = String.valueOf(this.count);
-        this.list += temp + ". " + input + "\n";
+        this.taskList[taskCount] = new Task(input);
+        this.taskCount++;
     }
 
+    private void mark(int id) {
+        Task task = this.taskList[id - 1];
+        task.mark();
+        System.out.println(horizontalLine + "\n" +
+                "Nice! I've marked this task as done:" + "\n" +
+                task + "\n" + horizontalLine);
+    }
+
+    private void unmark(int id) {
+        Task task = this.taskList[id - 1];
+        task.unmark();
+        System.out.println(horizontalLine + "\n" +
+                "OK! I've marked this task as not done yet:" + "\n" +
+                task + "\n" + horizontalLine);
+    }
 }
 
 
