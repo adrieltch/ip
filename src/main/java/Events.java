@@ -18,4 +18,3 @@ public class Events extends Task{
     }
 }
 
-//remove /from and /to

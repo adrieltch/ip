@@ -15,79 +15,116 @@ public class Fatty {
     }
 
     private void greet() {
-        System.out.println( horizontalLine + "\n"
+        System.out.println(horizontalLine + "\n"
                 + "Hello! I'm fatty.\n"
                 + "What can I do for you?\n"
-                + horizontalLine );
+                + horizontalLine);
     }
 
     private void echo() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
-            String[] parts = input.split(" ", 2);
-            String command = parts[0];
-
-
-            switch (command) {
-                case "bye":
-                    bye();
-                    scanner.close();
-                    return;
-
-                case "list":
-                    getList();
-                    break;
-
-                case "mark":
-                    int markId = Integer.parseInt(parts[1]);
-                    mark(markId); // mark task
-                    break;
-
-
-                case "unmark":
-                    int unmarkId = Integer.parseInt(parts[1]);
-                    unmark(unmarkId);
-                    break;
-
-                case "todo":
-                    addList(new ToDos(parts[1]));
-                    break;
-
-                case "deadline":
-                    String[] deadlineParts = parts[1].split(" /by ", 2);
-                    addList(new Deadlines(deadlineParts[0], deadlineParts[1]));
-                    break;
-
-                case "event":
-                    String[] eventParts = parts[1].split(" /from ", 2);
-                    String[] timeParts = eventParts[1].split(" /to ", 2);
-
-                    String from = timeParts[0];
-                    String to = timeParts[1];
-
-                    addList(new Events(eventParts[0], from, to));
-                    break;
-
-                default:
-                    System.out.println(horizontalLine + "\n" +
-                            "Please give an appropriate command!" + "\n" +
-                            horizontalLine);
-                    break;
+            try {
+                String input = scanner.nextLine();
+                parseAndExecute(input, scanner);
+            } catch (FattyException e) {
+                System.out.println(horizontalLine + "\n"
+                        + "☹ OOPS! Error: " + e.getMessage() + "\n"
+                        + horizontalLine);
+            } catch (Exception e) {
+                System.out.println(horizontalLine + "\n"
+                        + "☹ OOPS! Unexpected error: " + e.getMessage() + "\n"
+                        + horizontalLine);
             }
         }
-
     }
 
-    private void bye(){
+    private void parseAndExecute(String input, Scanner scanner) throws FattyException {
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+
+        switch (command) {
+            case "bye":
+                bye();
+                scanner.close();
+                System.exit(0);
+                break;
+
+            case "list":
+                getList();
+                break;
+
+            case "mark":
+                if (parts.length < 2) throw new FattyException("You must specify a task number to mark!");
+                int markId = Integer.parseInt(parts[1]);
+                mark(markId);
+                break;
+
+            case "unmark":
+                if (parts.length < 2) throw new FattyException("You must specify a task number to unmark!");
+                int unmarkId = Integer.parseInt(parts[1]);
+                unmark(unmarkId);
+                break;
+
+            case "todo":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new FattyException("The description of a todo cannot be empty.");
+                }
+                addList(new ToDos(parts[1].trim()));
+                break;
+
+            case "deadline":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new FattyException("The description of a deadline cannot be empty.");
+                }
+
+                String[] deadlineParts = parts[1].split("/by", 2);
+                if (deadlineParts.length < 2 || deadlineParts[0].trim().isEmpty() || deadlineParts[1].trim().isEmpty()) {
+                    throw new FattyException("Deadline must have a description and a /by <time>.");
+                }
+
+                String deadlineDesc = deadlineParts[0].trim();
+                String deadlineBy = deadlineParts[1].trim();
+
+                addList(new Deadlines(deadlineDesc, deadlineBy));
+                break;
+
+            case "event":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new FattyException("The description of an event cannot be empty.");
+                }
+
+                String[] eventParts = parts[1].split("/from", 2);
+                if (eventParts.length < 2 || eventParts[0].trim().isEmpty()) {
+                    throw new FattyException("Event must have a description and /from <start>.");
+                }
+
+                String[] timeParts = eventParts[1].split("/to", 2);
+                if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
+                    throw new FattyException("Event must have both /from <start> and /to <end>.");
+                }
+
+                String desc = eventParts[0].trim();
+                String from = timeParts[0].trim();
+                String to = timeParts[1].trim();
+
+                addList(new Events(desc, from, to));
+                break;
+
+            default:
+                throw new FattyException("I don’t know what that means.");
+        }
+    }
+
+    private void bye() {
         System.out.println(horizontalLine + "\n"
                 + "Bye. Hope to see you again soon!\n"
                 + horizontalLine);
     }
 
-    private void getList(){
+    private void getList() {
         System.out.println(horizontalLine + "\n"
-        + "here are the tasks in your list:");
+                + "Here are the tasks in your list:");
 
         for (int i = 0; i < taskCount; i++) {
             int taskNum = i + 1;
@@ -97,32 +134,42 @@ public class Fatty {
         System.out.println(horizontalLine);
     }
 
-    private void addList(Task task) {
+    private void addList(Task task) throws FattyException {
+        if (task == null) throw new FattyException("Task cannot be empty!");
+        if (taskCount >= taskList.length) throw new FattyException("Task list is full!");
+
         this.taskList[taskCount] = task;
         this.taskCount++;
         System.out.println(horizontalLine + "\n" +
-                "Got it. Ive added this task:\n" +
+                "Got it. I've added this task:\n" +
                 task + "\n" +
-                "Now you have " + this.taskCount +
-                " tasks in the list.\n" + horizontalLine);
+                "Now you have " + this.taskCount + " tasks in the list.\n" +
+                horizontalLine);
     }
 
-    private void mark(int id) {
+    private void mark(int id) throws FattyException {
+        if (id <= 0 || id > taskCount) {
+            throw new FattyException("Invalid task number: " + id);
+        }
         Task task = this.taskList[id - 1];
         task.mark();
         System.out.println(horizontalLine + "\n" +
-                "Nice! I've marked this task as done:" + "\n" +
+                "Nice! I've marked this task as done:\n" +
                 task + "\n" + horizontalLine);
     }
 
-    private void unmark(int id) {
+    private void unmark(int id) throws FattyException {
+        if (id <= 0 || id > taskCount) {
+            throw new FattyException("Invalid task number: " + id);
+        }
         Task task = this.taskList[id - 1];
         task.unmark();
         System.out.println(horizontalLine + "\n" +
-                "OK! I've marked this task as not done yet:" + "\n" +
+                "OK! I've marked this task as not done yet:\n" +
                 task + "\n" + horizontalLine);
     }
 }
+
 
 
 
