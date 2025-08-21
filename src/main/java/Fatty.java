@@ -24,9 +24,12 @@ public class Fatty {
     private void echo() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.next();
+            String input = scanner.nextLine();
+            String[] parts = input.split(" ", 2);
+            String command = parts[0];
 
-            switch (input) {
+
+            switch (command) {
                 case "bye":
                     bye();
                     scanner.close();
@@ -37,23 +40,38 @@ public class Fatty {
                     break;
 
                 case "mark":
-                    if (scanner.hasNextInt()) {
-                        int id = scanner.nextInt();
-                        mark(id); // mark task
-                        break;
-                    }
+                    int markId = Integer.parseInt(parts[1]);
+                    mark(markId); // mark task
+                    break;
+
 
                 case "unmark":
-                    if (scanner.hasNextInt()) {
-                        int id = scanner.nextInt();
-                        unmark(id);
-                        break;
-                    }
+                    int unmarkId = Integer.parseInt(parts[1]);
+                    unmark(unmarkId);
+                    break;
+
+                case "todo":
+                    addList(new ToDos(parts[1]));
+                    break;
+
+                case "deadline":
+                    String[] deadlineParts = parts[1].split(" /by ", 2);
+                    addList(new Deadlines(deadlineParts[0], deadlineParts[1]));
+                    break;
+
+                case "event":
+                    String[] eventParts = parts[1].split(" /from ", 2);
+                    String[] timeParts = eventParts[1].split(" /to ", 2);
+
+                    String from = timeParts[0];
+                    String to = timeParts[1];
+
+                    addList(new Events(eventParts[0], from, to));
+                    break;
 
                 default:
-                    addList(input);
                     System.out.println(horizontalLine + "\n" +
-                            "added: " + input + "\n" +
+                            "Please give an appropriate command!" + "\n" +
                             horizontalLine);
                     break;
             }
@@ -79,9 +97,14 @@ public class Fatty {
         System.out.println(horizontalLine);
     }
 
-    private void addList(String input) {
-        this.taskList[taskCount] = new Task(input);
+    private void addList(Task task) {
+        this.taskList[taskCount] = task;
         this.taskCount++;
+        System.out.println(horizontalLine + "\n" +
+                "Got it. Ive added this task:\n" +
+                task + "\n" +
+                "Now you have " + this.taskCount +
+                " tasks in the list.\n" + horizontalLine);
     }
 
     private void mark(int id) {
