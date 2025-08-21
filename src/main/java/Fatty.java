@@ -40,20 +40,21 @@ public class Fatty {
 
     private void parseAndExecute(String input, Scanner scanner) throws FattyException {
         String[] parts = input.split(" ", 2);
-        String command = parts[0];
+        Command command = Command.fromString(parts[0]);
+
 
         switch (command) {
-            case "bye":
+            case BYE:
                 bye();
                 scanner.close();
                 System.exit(0);
                 break;
 
-            case "list":
+            case LIST:
                 getList();
                 break;
 
-            case "mark":
+            case MARK:
                 if (parts.length < 2) throw new FattyException("You must specify a task number to mark!");
                 if (!parts[1].matches("\\d+")) {
                     throw new FattyException("Task number must be a valid number!");
@@ -62,7 +63,7 @@ public class Fatty {
                 mark(markId);
                 break;
 
-            case "unmark":
+            case UNMARK:
                 if (parts.length < 2) throw new FattyException("You must specify a task number to unmark!");
                 if (!parts[1].matches("\\d+")) {
                     throw new FattyException("Task number must be a valid number!");
@@ -71,14 +72,14 @@ public class Fatty {
                 unmark(unmarkId);
                 break;
 
-            case "todo":
+            case TODO:
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     throw new FattyException("The description of a todo cannot be empty.");
                 }
                 addList(new ToDos(parts[1].trim()));
                 break;
 
-            case "deadline":
+            case DEADLINE:
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     throw new FattyException("The description of a deadline cannot be empty.");
                 }
@@ -94,7 +95,7 @@ public class Fatty {
                 addList(new Deadlines(deadlineName, deadlineBy));
                 break;
 
-            case "event":
+            case EVENT:
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     throw new FattyException("The description of an event cannot be empty.");
                 }
@@ -116,7 +117,7 @@ public class Fatty {
                 addList(new Events(eventName, from, to));
                 break;
 
-            case "delete":
+            case DELETE:
                 if (parts.length < 2) {
                     throw new FattyException("You must specify a task number to delete!");
                 }
