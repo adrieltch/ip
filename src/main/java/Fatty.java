@@ -3,12 +3,11 @@ import java.util.*;
 public class Fatty {
     private static final String horizontalLine = "_".repeat(75);
 
-    private Task[] taskList;
-    private int taskCount = 0;
+    private List<Task> taskList;
 
     public static void main(String[] args) {
         Fatty fatty = new Fatty();
-        fatty.taskList = new Task[100];
+        fatty.taskList = new ArrayList<>();
 
         fatty.greet();
         fatty.echo();
@@ -56,12 +55,18 @@ public class Fatty {
 
             case "mark":
                 if (parts.length < 2) throw new FattyException("You must specify a task number to mark!");
+                if (!parts[1].matches("\\d+")) {
+                    throw new FattyException("Task number must be a valid number!");
+                }
                 int markId = Integer.parseInt(parts[1]);
                 mark(markId);
                 break;
 
             case "unmark":
                 if (parts.length < 2) throw new FattyException("You must specify a task number to unmark!");
+                if (!parts[1].matches("\\d+")) {
+                    throw new FattyException("Task number must be a valid number!");
+                }
                 int unmarkId = Integer.parseInt(parts[1]);
                 unmark(unmarkId);
                 break;
@@ -83,10 +88,10 @@ public class Fatty {
                     throw new FattyException("Deadline must have a description and a /by <time>.");
                 }
 
-                String deadlineDesc = deadlineParts[0].trim();
+                String deadlineName = deadlineParts[0].trim();
                 String deadlineBy = deadlineParts[1].trim();
 
-                addList(new Deadlines(deadlineDesc, deadlineBy));
+                addList(new Deadlines(deadlineName, deadlineBy));
                 break;
 
             case "event":
@@ -104,11 +109,22 @@ public class Fatty {
                     throw new FattyException("Event must have both /from <start> and /to <end>.");
                 }
 
-                String desc = eventParts[0].trim();
+                String eventName = eventParts[0].trim();
                 String from = timeParts[0].trim();
                 String to = timeParts[1].trim();
 
-                addList(new Events(desc, from, to));
+                addList(new Events(eventName, from, to));
+                break;
+
+            case "delete":
+                if (parts.length < 2) {
+                    throw new FattyException("You must specify a task number to delete!");
+                }
+                if (!parts[1].matches("\\d+")) {
+                    throw new FattyException("Task number must be a valid number!");
+                }
+                int deleteId = Integer.parseInt(parts[1]);
+                delete(deleteId);
                 break;
 
             default:
@@ -126,9 +142,9 @@ public class Fatty {
         System.out.println(horizontalLine + "\n"
                 + "Here are the tasks in your list:");
 
-        for (int i = 0; i < taskCount; i++) {
+        for (int i = 0; i < taskList.size(); i++) {
             int taskNum = i + 1;
-            System.out.println(taskNum + "." + taskList[i]);
+            System.out.println(taskNum + "." + taskList.get(i));
         }
 
         System.out.println(horizontalLine);
@@ -136,22 +152,22 @@ public class Fatty {
 
     private void addList(Task task) throws FattyException {
         if (task == null) throw new FattyException("Task cannot be empty!");
-        if (taskCount >= taskList.length) throw new FattyException("Task list is full!");
+        if (taskList.size() > 100) throw new FattyException("Task list is full!");
 
-        this.taskList[taskCount] = task;
-        this.taskCount++;
+        this.taskList.add(task);
+
         System.out.println(horizontalLine + "\n" +
                 "Got it. I've added this task:\n" +
                 task + "\n" +
-                "Now you have " + this.taskCount + " tasks in the list.\n" +
+                "Now you have " + this.taskList.size() + " tasks in the list.\n" +
                 horizontalLine);
     }
 
     private void mark(int id) throws FattyException {
-        if (id <= 0 || id > taskCount) {
+        if (id <= 0 || id > taskList.size()) {
             throw new FattyException("Invalid task number: " + id);
         }
-        Task task = this.taskList[id - 1];
+        Task task = taskList.get(id - 1);
         task.mark();
         System.out.println(horizontalLine + "\n" +
                 "Nice! I've marked this task as done:\n" +
@@ -159,14 +175,26 @@ public class Fatty {
     }
 
     private void unmark(int id) throws FattyException {
-        if (id <= 0 || id > taskCount) {
+        if (id <= 0 || id > taskList.size()) {
             throw new FattyException("Invalid task number: " + id);
         }
-        Task task = this.taskList[id - 1];
+        Task task = taskList.get(id - 1);
         task.unmark();
         System.out.println(horizontalLine + "\n" +
                 "OK! I've marked this task as not done yet:\n" +
                 task + "\n" + horizontalLine);
+    }
+
+    private void delete(int id) throws FattyException {
+        if (id <= 0 || id > taskList.size()) {
+            throw new FattyException("Invalid task number!");
+        }
+        Task removed = taskList.remove(id - 1);
+        System.out.println(horizontalLine + "\n" +
+                "Noted. I've removed this task:\n" +
+                removed + "\n" +
+                "Now you have " + taskList.size() +
+                " tasks in the list.\n" + horizontalLine);
     }
 }
 
