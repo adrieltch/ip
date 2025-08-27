@@ -1,10 +1,15 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 
 public class Fatty {
     private static final String horizontalLine = "_".repeat(75);
@@ -93,13 +98,21 @@ public class Fatty {
 
             String[] deadlineParts = parts[1].split("/by", 2);
             if (deadlineParts.length < 2 || deadlineParts[0].trim().isEmpty() || deadlineParts[1].trim().isEmpty()) {
-                throw new FattyException("Deadline must have a description and a /by <time>.");
+                throw new FattyException("Deadline must have a description and a /by <d/M/yyyy HHmm>.");
             }
 
             String deadlineName = deadlineParts[0].trim();
-            String deadlineBy = deadlineParts[1].trim();
+            String byInput = deadlineParts[1].trim();
 
-            addList(new Deadlines(deadlineName, deadlineBy));
+            LocalDateTime by;
+            try {
+                DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                by = LocalDateTime.parse(byInput, inputFormat);
+            } catch (DateTimeParseException e) {
+                throw new FattyException("Invalid date/time format! Use d/M/yyyy HHmm (e.g., 21/12/2024 1800).");
+            }
+
+            addList(new Deadlines(deadlineName, by));
             break;
 
         case EVENT:
@@ -118,8 +131,18 @@ public class Fatty {
             }
 
             String eventName = eventParts[0].trim();
-            String from = timeParts[0].trim();
-            String to = timeParts[1].trim();
+            String fromInput = timeParts[0].trim();
+            String toInput = timeParts[1].trim();
+
+            LocalDateTime from;
+            LocalDateTime to;
+            try {
+                DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                from = LocalDateTime.parse(fromInput, inputFormat);
+                to = LocalDateTime.parse(toInput, inputFormat);
+            } catch (DateTimeParseException e) {
+                throw new FattyException("Invalid date/time format! Use d/M/yyyy HHmm (e.g., 21/12/2024 1800).");
+            }
 
             addList(new Events(eventName, from, to));
             break;

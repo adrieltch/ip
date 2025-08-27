@@ -1,19 +1,22 @@
-public class Deadlines extends Task{
-    private static final String type = "[D]";
-    private final String by;
+import java.time.LocalDateTime;
 
-    public Deadlines(String name, String deadline){
+public class Deadlines extends Task{
+    private static final String TYPE = "[D]";
+    private final LocalDateTime by;
+
+    public Deadlines(String name, LocalDateTime by){
         super(name);
-        this.by = deadline;
+        this.by = by;
     }
 
     @Override
     public String toString(){
-        return type + super.toString() + " (by: " + this.by + ")";
+        return TYPE + super.toString() + " (by: " + this.by.format(DISPLAY_FORMAT) + ")";
     }
     @Override
     public String toDataString() {
-        return "D | " + (this.isMark ? "1" : "0") + " | " + this.name + " | " + this.by;
+        return "D | " + (this.isMark ? "1" : "0") + " | " + this.name + " | " + this.by.format(SAVE_FORMAT);
     }
+
 }
 

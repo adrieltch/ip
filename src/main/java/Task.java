@@ -1,6 +1,13 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
     protected boolean isMark;
     protected final String name;
+
+    protected static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    protected static final DateTimeFormatter SAVE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+
 
 
     public Task(String name) {
@@ -28,7 +35,7 @@ public abstract class Task {
     public abstract String toDataString();
 
     public static Task fromDataString(String data) throws FattyException {
-        String[] parts = data.split(" \\| "); // type | status | description | times
+        String[] parts = data.split(" \\| "); // type | status | description | times (d/M/yyyy HHmm)
         String type = parts[0];
         boolean done = parts[1].equals("1");
         switch (type) {
@@ -37,11 +44,15 @@ public abstract class Task {
                 if (done) todo.mark();
                 return todo;
             case "D":
-                Task deadline = new Deadlines(parts[2], parts[3]);
+                LocalDateTime deadlineBy = LocalDateTime.parse(parts[3], SAVE_FORMAT);
+                Task deadline = new Deadlines(parts[2], deadlineBy);
                 if (done) deadline.mark();
                 return deadline;
             case "E":
-                Task event = new Events(parts[2], parts[3], parts[4]);
+                LocalDateTime eventBy = LocalDateTime.parse(parts[3], SAVE_FORMAT);
+                LocalDateTime eventTo = LocalDateTime.parse(parts[4], SAVE_FORMAT);
+
+                Task event = new Events(parts[2], eventBy, eventTo);
                 if (done) event.mark();
                 return event;
             default:
