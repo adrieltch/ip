@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 
 public class Fatty {
