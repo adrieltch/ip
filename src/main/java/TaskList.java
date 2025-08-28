@@ -10,7 +10,6 @@ public class TaskList {
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
-
     public void add(Task task) throws FattyException {
         if (task == null) throw new FattyException("Task cannot be empty!");
         if (tasks.size() > 100) throw new FattyException("Task list is full!");
@@ -22,8 +21,8 @@ public class TaskList {
         return tasks.get(index);
     }
 
-    public Task delete(int index) {
-        return tasks.remove(index);
+    public void delete(int index) {
+        tasks.remove(index);
     }
 
     public void mark(int index) throws FattyException {

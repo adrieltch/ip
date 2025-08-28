@@ -1,8 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.time.format.DateTimeParseException;
-import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,14 +10,15 @@ public class Fatty {
 
     private static TaskList taskList;
     private static Ui ui;
-
+    private static Storage storage;
 
     public static void main(String[] args) {
         //Fatty fatty = new Fatty();
         ui = new Ui();
-        taskList = new TaskList();
+        storage = new Storage(TASK_FILE);
 
-        loadTasks();
+        taskList = new TaskList(storage.loadTasks());
+
         ui.showWelcome();
         echo();
     }
@@ -64,7 +61,7 @@ public class Fatty {
             int markId = Integer.parseInt(parts[1]);
 
             taskList.mark(markId);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showMark(taskList.get(markId - 1));
             break;
@@ -77,7 +74,7 @@ public class Fatty {
             int unmarkId = Integer.parseInt(parts[1]);
 
             taskList.unmark(unmarkId);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showMark(taskList.get(unmarkId - 1));
             break;
@@ -88,7 +85,7 @@ public class Fatty {
             }
             ToDos toDo = new ToDos(parts[1].trim());
             taskList.add(toDo);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showTaskAdded(toDo, taskList);
             break;
@@ -117,7 +114,7 @@ public class Fatty {
             Deadlines deadline = new Deadlines(deadlineName, by);
 
             taskList.add(deadline);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showTaskAdded(deadline, taskList);
             break;
@@ -154,7 +151,7 @@ public class Fatty {
             Events event = new Events(eventName, from, to);
 
             taskList.add(event);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showTaskAdded(event,taskList);
 
@@ -170,63 +167,13 @@ public class Fatty {
             int deleteId = Integer.parseInt(parts[1]);
 
             taskList.delete(deleteId);
-            saveTasks();
+            storage.saveTasks(taskList);
 
             ui.showDelete(taskList.get(deleteId - 1), taskList);
             break;
 
         default:
             throw new FattyException("I don’t know what that means.");
-        }
-    }
-
-
-    private static void loadTasks() {
-        File file = new File(TASK_FILE);
-
-        try {
-            if (!file.exists()) {
-                // First-time run: create the file and inform the user
-                file.getParentFile().mkdirs();
-                if (file.createNewFile()) {
-                    System.out.println(horizontalLine + "\n"
-                            + "No existing task file found. Fatty will create one for you...");
-                }
-                return; // Nothing to load yet
-            }
-
-            // If file exists, read and load tasks
-            try (Scanner scanner = new Scanner(file)) {
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    Task task = Task.fromDataString(line);
-                    taskList.add(task);
-                }
-            } catch (FattyException e) {
-                System.out.println("⚠ Warning: Some tasks could not be loaded: " + e.getMessage());
-            }
-
-        } catch (IOException e) {
-            System.out.println("☹ OOPS! An error occurred while setting up the task file: " + e.getMessage());
-        }
-    }
-
-
-    private static void saveTasks() {
-        File file = new File(TASK_FILE);
-
-        try {
-            file.getParentFile().mkdirs();
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                for (int i = 0; i < taskList.size(); i++) {
-                    Task task = taskList.get(i);
-                    writer.write(task.toDataString());
-                    writer.newLine();
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("☹ OOPS! Failed to save tasks: " + e.getMessage());
         }
     }
 
