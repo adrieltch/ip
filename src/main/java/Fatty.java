@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Fatty {
-    private static final String horizontalLine = "_".repeat(75);
     private static final String TASK_FILE = "./data/fatty.txt";
 
     private static TaskList taskList;
