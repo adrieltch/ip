@@ -1,12 +1,12 @@
 import java.time.LocalDateTime;
 
-public class Events extends Task{
+public class EventTask extends Task{
     private static final String type = "[E]";
     private final LocalDateTime from;
     private final LocalDateTime to;
 
-    public Events(String name, LocalDateTime from, LocalDateTime to){
-        super(name);
+    public EventTask(String description, LocalDateTime from, LocalDateTime to){
+        super(description);
         this.from = from;
         this.to = to;
 
@@ -20,7 +20,7 @@ public class Events extends Task{
 
     @Override
     public String toDataString() {
-        return "E | " + (this.isMark ? "1" : "0") + " | " + this.name + " | "
+        return "E | " + (this.isMark ? "1" : "0") + " | " + this.description + " | "
                 + this.from.format(SAVE_FORMAT) + " | " + this.to.format(SAVE_FORMAT);
     }
 }

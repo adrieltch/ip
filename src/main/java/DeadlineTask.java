@@ -1,11 +1,11 @@
 import java.time.LocalDateTime;
 
-public class Deadlines extends Task{
+public class DeadlineTask extends Task{
     private static final String TYPE = "[D]";
     private final LocalDateTime by;
 
-    public Deadlines(String name, LocalDateTime by){
-        super(name);
+    public DeadlineTask(String description, LocalDateTime by){
+        super(description);
         this.by = by;
     }
 
@@ -15,7 +15,7 @@ public class Deadlines extends Task{
     }
     @Override
     public String toDataString() {
-        return "D | " + (this.isMark ? "1" : "0") + " | " + this.name + " | " + this.by.format(SAVE_FORMAT);
+        return "D | " + (this.isMark ? "1" : "0") + " | " + this.description + " | " + this.by.format(SAVE_FORMAT);
     }
 
 }

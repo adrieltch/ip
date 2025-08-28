@@ -12,7 +12,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> loadTasks() {
+    public ArrayList<Task> loadTasks() throws FattyException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
         try {
@@ -28,20 +28,20 @@ public class Storage {
                     tasks.add(task);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("⚠ Failed to load tasks: " + e.getMessage());
         }
         return tasks;
     }
 
-    public void saveTasks(TaskList tasks) {
+    public void saveTasks(TaskList tasks) throws FattyException {
         File file = new File(filePath);
 
         try {
             file.getParentFile().mkdirs();
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                for (int i = 0; i < tasks.size(); i++) {
+                for (int i = 1; i < tasks.size() + 1; i++) {
                     Task task = tasks.get(i);
                     writer.write(task.toDataString());
                     writer.newLine();

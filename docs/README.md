@@ -1,6 +1,6 @@
 # fatty User Guide
 
-// Update the title above to match the actual product name
+// Update the title above to match the actual product description
 
 // Product screenshot goes here
 

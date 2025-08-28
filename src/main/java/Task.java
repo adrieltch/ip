@@ -3,16 +3,16 @@ import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
     protected boolean isMark;
-    protected final String name;
+    protected final String description;
 
     protected static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     protected static final DateTimeFormatter SAVE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
 
 
 
-    public Task(String name) {
+    public Task(String description) {
         this.isMark = false;
-        this.name = name;
+        this.description = description;
     }
 
     @Override
@@ -21,10 +21,11 @@ public abstract class Task {
         if (this.isMark) {
             check = "[X]";
         }
-        return check + " " + this.name;
+        return check + " " + this.description;
     }
 
     public void mark() {
+
         this.isMark = true;
     }
 
@@ -40,19 +41,19 @@ public abstract class Task {
         boolean done = parts[1].equals("1");
         switch (type) {
             case "T":
-                Task todo = new ToDos(parts[2]);
+                Task todo = new ToDoTask(parts[2]);
                 if (done) todo.mark();
                 return todo;
             case "D":
                 LocalDateTime deadlineBy = LocalDateTime.parse(parts[3], SAVE_FORMAT);
-                Task deadline = new Deadlines(parts[2], deadlineBy);
+                Task deadline = new DeadlineTask(parts[2], deadlineBy);
                 if (done) deadline.mark();
                 return deadline;
             case "E":
                 LocalDateTime eventBy = LocalDateTime.parse(parts[3], SAVE_FORMAT);
                 LocalDateTime eventTo = LocalDateTime.parse(parts[4], SAVE_FORMAT);
 
-                Task event = new Events(parts[2], eventBy, eventTo);
+                Task event = new EventTask(parts[2], eventBy, eventTo);
                 if (done) event.mark();
                 return event;
             default:

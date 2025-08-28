@@ -1,8 +1,8 @@
-public class ToDos extends Task{
+public class ToDoTask extends Task{
     private static final String type = "[T]";
 
-    public ToDos(String name){
-        super(name);
+    public ToDoTask(String description){
+        super(description);
   }
 
     @Override
@@ -12,6 +12,6 @@ public class ToDos extends Task{
 
     @Override
     public String toDataString() {
-        return "T | " + (this.isMark ? "1" : "0") + " | " + this.name;
+        return "T | " + (this.isMark ? "1" : "0") + " | " + this.description;
     }
 }

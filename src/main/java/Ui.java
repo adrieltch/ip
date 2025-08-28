@@ -1,5 +1,17 @@
+import java.util.Scanner;
+
 public class Ui {
     private static final String horizontalLine = "_".repeat(75);
+    private final Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine().trim();
+    }
+
 
     public void showWelcome() {
         System.out.println(horizontalLine + "\n"
