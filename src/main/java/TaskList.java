@@ -11,7 +11,10 @@ public class TaskList {
         this.tasks = tasks;
     }
 
-    public void add(Task task) {
+    public void add(Task task) throws FattyException {
+        if (task == null) throw new FattyException("Task cannot be empty!");
+        if (tasks.size() > 100) throw new FattyException("Task list is full!");
+
         tasks.add(task);
     }
 
@@ -23,12 +26,20 @@ public class TaskList {
         return tasks.remove(index);
     }
 
-    public void mark(int index) {
-        tasks.get(index).mark();
+    public void mark(int index) throws FattyException {
+        if (index <= 0 || index > this.size()) {
+            throw new FattyException("Invalid task number: " + index);
+        }
+
+        tasks.get(index - 1).mark();
     }
 
-    public void unmark(int index) {
-        tasks.get(index).unmark();
+    public void unmark(int index) throws FattyException{
+        if (index <= 0 || index > this.size()) {
+            throw new FattyException("Invalid task number: " + index);
+        }
+
+        tasks.get(index - 1).unmark();
     }
 
     public int size() {
