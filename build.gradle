@@ -34,6 +34,7 @@ application {
 shadowJar {
     archiveBaseName = "Fatty"
     archiveClassifier = null
+    archiveFileName = 'Fatty.jar'
 }
 
 run{
