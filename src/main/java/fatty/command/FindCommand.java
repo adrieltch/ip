@@ -5,10 +5,6 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 
-import fatty.task.Task;
-
-import java.util.ArrayList;
-
 public class FindCommand extends Command {
     private final String keyword;
 
