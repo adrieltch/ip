@@ -3,6 +3,7 @@ package fatty;
 import fatty.task.Task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -74,5 +75,10 @@ public class TaskList {
         return sb.toString().trim();
     }
 
+    public TaskList find(String keyword) {
+        return new TaskList(tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toCollection(ArrayList::new)));
+    }
 }
 

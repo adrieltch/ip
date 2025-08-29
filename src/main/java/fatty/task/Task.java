@@ -64,4 +64,8 @@ public abstract class Task {
                 throw new FattyException("Unknown task type in file!");
         }
     }
+
+    public String getDescription() {
+        return this.description;
+    }
 }

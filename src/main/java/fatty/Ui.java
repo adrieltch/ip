@@ -68,4 +68,15 @@ public class Ui {
                 + "☹ OOPS! Error: " + message + "\n"
                 + horizontalLine);
     }
+    public void showFind(TaskList tasks) {
+        if (tasks.size() == 0) {
+            System.out.println(horizontalLine + "\n" +
+                    "There are no tasks that match the keyword!\n" + horizontalLine);
+        } else {
+            System.out.println(horizontalLine + "\n" +
+                    "Here are the matching tasks in your list:" + "\n" +
+                    tasks + "\n" + horizontalLine);
+        }
+
+    }
 }
