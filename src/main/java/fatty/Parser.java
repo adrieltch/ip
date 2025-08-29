@@ -1,15 +1,16 @@
 package fatty;
 
-
 import fatty.command.ByeCommand;
 import fatty.command.Command;
+import fatty.command.DeadlineCommand;
+import fatty.command.DeleteCommand;
+import fatty.command.EventCommand;
+import fatty.command.FindCommand;
 import fatty.command.ListCommand;
 import fatty.command.MarkCommand;
 import fatty.command.UnmarkCommand;
 import fatty.command.ToDoCommand;
-import fatty.command.DeleteCommand;
-import fatty.command.DeadlineCommand;
-import fatty.command.EventCommand;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

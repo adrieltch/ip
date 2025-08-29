@@ -1,10 +1,12 @@
 package fatty;
 
 import fatty.task.Task;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,6 +30,7 @@ public class Storage {
     public ArrayList<Task> loadTasks() throws FattyException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
+
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
