@@ -1,4 +1,8 @@
-public class ToDoTask extends Task{
+package fatty.task;
+
+
+
+public class ToDoTask extends Task {
     private static final String type = "[T]";
 
     public ToDoTask(String description){

@@ -1,3 +1,7 @@
+package fatty;
+
+import fatty.task.Task;
+
 import java.util.Scanner;
 
 public class Ui {

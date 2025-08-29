@@ -1,3 +1,7 @@
+package fatty.task;
+
+import fatty.FattyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

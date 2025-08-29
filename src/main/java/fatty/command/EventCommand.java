@@ -1,3 +1,11 @@
+package fatty.command;
+
+import fatty.FattyException;
+import fatty.Storage;
+import fatty.TaskList;
+import fatty.Ui;
+import fatty.task.EventTask;
+
 import java.time.LocalDateTime;
 
 public class EventCommand extends Command {

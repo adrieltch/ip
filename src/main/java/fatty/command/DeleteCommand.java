@@ -1,3 +1,12 @@
+package fatty.command;
+
+import fatty.FattyException;
+import fatty.Storage;
+import fatty.TaskList;
+import fatty.Ui;
+
+import fatty.task.Task;
+
 public class DeleteCommand extends Command {
     private final int index;
 

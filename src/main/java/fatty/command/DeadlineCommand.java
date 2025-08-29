@@ -1,4 +1,13 @@
+package fatty.command;
+
+
+
+import fatty.FattyException;
+import fatty.Storage;
+import fatty.TaskList;
+import fatty.Ui;
 import java.time.LocalDateTime;
+import fatty.task.DeadlineTask;
 
 public class DeadlineCommand extends Command {
     private final String description;

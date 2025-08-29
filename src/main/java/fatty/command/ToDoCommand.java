@@ -1,3 +1,11 @@
+package fatty.command;
+
+import fatty.FattyException;
+import fatty.Storage;
+import fatty.TaskList;
+import fatty.Ui;
+import fatty.task.ToDoTask;
+
 public class ToDoCommand extends Command {
     private final String description;
 

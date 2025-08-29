@@ -1,3 +1,6 @@
+package fatty;
+
+import fatty.command.Command;
 public class Fatty {
 
     private Storage storage;

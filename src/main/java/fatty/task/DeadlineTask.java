@@ -1,3 +1,5 @@
+package fatty.task;
+
 import java.time.LocalDateTime;
 
 public class DeadlineTask extends Task{

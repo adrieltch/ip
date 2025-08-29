@@ -1,3 +1,10 @@
+package fatty.command;
+
+import fatty.FattyException;
+import fatty.Storage;
+import fatty.TaskList;
+import fatty.Ui;
+
 public class UnmarkCommand extends Command {
     private final int index;
 
