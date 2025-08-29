@@ -5,6 +5,9 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 
+/**
+ * Marks task at index in tasklist as done.
+ */
 public class MarkCommand extends Command {
     private final int index;
 

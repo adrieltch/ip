@@ -1,11 +1,14 @@
 package fatty;
 
 import fatty.command.Command;
+
 public class Fatty {
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+
+    /** File path to load and save taskList */
     private static final String TASK_FILE = "./data/fattyTasks.txt";
 
     public Fatty(String filePath) {

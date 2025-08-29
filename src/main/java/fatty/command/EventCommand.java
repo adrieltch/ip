@@ -5,9 +5,11 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.EventTask;
-
 import java.time.LocalDateTime;
 
+/**
+ * Create Event Task with given from and to times.
+ */
 public class EventCommand extends Command {
     private final String description;
     private final LocalDateTime from;

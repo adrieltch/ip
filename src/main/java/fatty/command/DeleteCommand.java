@@ -4,9 +4,11 @@ import fatty.FattyException;
 import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
-
 import fatty.task.Task;
 
+/**
+ * Deletes task from tasklist at index
+ */
 public class DeleteCommand extends Command {
     private final int index;
 

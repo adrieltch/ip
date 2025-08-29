@@ -1,16 +1,32 @@
 package fatty;
 
 
-import fatty.command.*;
+import fatty.command.ByeCommand;
+import fatty.command.Command;
 import fatty.command.ListCommand;
-
-
+import fatty.command.MarkCommand;
+import fatty.command.UnmarkCommand;
+import fatty.command.ToDoCommand;
+import fatty.command.DeleteCommand;
+import fatty.command.DeadlineCommand;
+import fatty.command.EventCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parser takes in the input from user as a String and parse it to appropriate formats for Commands to execute.
+ */
 public class Parser {
 
+    /**
+     * Returns Command object to be executed based of user input received.
+     * If user input is not recognised, returns FattyException.
+     *
+     * @param fullCommand Full input from user.
+     * @return Command object to be executed.
+     * @throws FattyException If input is in the wrong format or not recognised.
+     */
     public static Command parse(String fullCommand) throws FattyException {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0].toLowerCase();

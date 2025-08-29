@@ -1,10 +1,12 @@
 package fatty.task;
 
 import fatty.FattyException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Main Skeleton of a Task
+ */
 public abstract class Task {
     protected boolean isMark;
     protected final String description;
@@ -12,13 +14,15 @@ public abstract class Task {
     protected static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     protected static final DateTimeFormatter SAVE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
 
-
-
     public Task(String description) {
         this.isMark = false;
         this.description = description;
     }
 
+    /**
+     * Override toString to appropriate format.
+     * @return
+     */
     @Override
     public String toString() {
         String check = "[ ]";
@@ -37,10 +41,21 @@ public abstract class Task {
         this.isMark = false;
     }
 
+    /**
+     * Reformat Task into "type | status | description | times (d/M/yyyy HHmm)" to save into local file.
+     * @return
+     */
     public abstract String toDataString();
 
+    /**
+     * Reads data from loaded file and refactor into appropriate Task Object.
+     *
+     * @param data Data from loaded file.
+     * @return
+     * @throws FattyException Unrecognised Task
+     */
     public static Task fromDataString(String data) throws FattyException {
-        String[] parts = data.split(" \\| "); // type | status | description | times (d/M/yyyy HHmm)
+        String[] parts = data.split(" \\| ");
         String type = parts[0];
         boolean done = parts[1].equals("1");
         switch (type) {
