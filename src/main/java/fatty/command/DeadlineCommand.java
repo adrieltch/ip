@@ -9,6 +9,9 @@ import fatty.Ui;
 import java.time.LocalDateTime;
 import fatty.task.DeadlineTask;
 
+/**
+ * Command to create deadline task
+ */
 public class DeadlineCommand extends Command {
     private final String description;
     private final LocalDateTime by;

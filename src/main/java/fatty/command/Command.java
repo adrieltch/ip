@@ -5,6 +5,9 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 
+/**
+ * Parent class of commands
+ */
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws FattyException;
     public boolean isExit() {

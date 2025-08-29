@@ -6,6 +6,9 @@ import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.ToDoTask;
 
+/**
+ * Create To do task with description.
+ */
 public class ToDoCommand extends Command {
     private final String description;
 

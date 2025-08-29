@@ -1,7 +1,6 @@
 package fatty;
 
 import fatty.task.Task;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Loads and saves tasklist from/into given filePath.
+ */
 public class Storage {
     private final String filePath;
 
@@ -16,6 +18,13 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Retrieves file at filePath and loads its contents to create TaskList.
+     * If file does not exist, creates a file at the filePath.
+     *
+     * @return TaskList loaded from filePath
+     * @throws FattyException If there is error loading file.
+     */
     public ArrayList<Task> loadTasks() throws FattyException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -38,6 +47,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves taskList into file at filePath.
+     *
+     * @param tasks TaskList
+     * @throws FattyException Error trying to save.
+     */
     public void saveTasks(TaskList tasks) throws FattyException {
         File file = new File(filePath);
 

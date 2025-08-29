@@ -2,6 +2,9 @@ package fatty.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Event Task includes description, from and to time.
+ */
 public class EventTask extends Task{
     private static final String type = "[E]";
     private final LocalDateTime from;
@@ -20,6 +23,10 @@ public class EventTask extends Task{
                 + " to: " + this.to.format(DISPLAY_FORMAT) + ")";
     }
 
+    /**
+     * Reformat Task into "type | status | description | times (d/M/yyyy HHmm)" to save into local file.
+     * @return
+     */
     @Override
     public String toDataString() {
         return "E | " + (this.isMark ? "1" : "0") + " | " + this.description + " | "

@@ -1,9 +1,11 @@
 package fatty;
 
 import fatty.task.Task;
-
 import java.util.Scanner;
 
+/**
+ * Ui deals user interactions. Takes in user input and displays messages.
+ */
 public class Ui {
     private static final String horizontalLine = "_".repeat(75);
     private final Scanner scanner;
@@ -12,6 +14,11 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     *Scans user input and return it as a String.
+     *
+     * @return
+     */
     public String readCommand() {
         return scanner.nextLine().trim();
     }

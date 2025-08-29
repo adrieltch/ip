@@ -5,6 +5,9 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 
+/**
+ * Unmarks task at index in tasklist.
+ */
 public class UnmarkCommand extends Command {
     private final int index;
 
