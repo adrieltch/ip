@@ -1,9 +1,14 @@
 package fatty;
 
-
-import fatty.command.*;
+import fatty.command.ByeCommand;
+import fatty.command.Command;
+import fatty.command.DeadlineCommand;
+import fatty.command.DeleteCommand;
+import fatty.command.EventCommand;
 import fatty.command.ListCommand;
-
+import fatty.command.MarkCommand;
+import fatty.command.ToDoCommand;
+import fatty.command.UnmarkCommand;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

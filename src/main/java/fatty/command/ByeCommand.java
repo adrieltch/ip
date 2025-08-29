@@ -1,10 +1,8 @@
 package fatty.command;
 
-
 import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
-
 
 public class ByeCommand extends Command {
     @Override

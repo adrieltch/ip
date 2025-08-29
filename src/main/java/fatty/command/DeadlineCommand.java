@@ -1,13 +1,13 @@
 package fatty.command;
 
-
-
 import fatty.FattyException;
 import fatty.Storage;
 import fatty.TaskList;
-import fatty.Ui;
-import java.time.LocalDateTime;
 import fatty.task.DeadlineTask;
+import fatty.Ui;
+
+import java.time.LocalDateTime;
+
 
 public class DeadlineCommand extends Command {
     private final String description;
@@ -21,6 +21,7 @@ public class DeadlineCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         DeadlineTask deadline = new DeadlineTask(description, by);
+
         taskList.addTask(deadline);
         storage.saveTasks(taskList);
         ui.showTaskAdded(deadline, taskList);

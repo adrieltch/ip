@@ -18,7 +18,9 @@ public class ToDoCommand extends Command {
         if (description.isEmpty()) {
             throw new FattyException("The description of a todo cannot be empty.");
         }
+
         ToDoTask toDo = new ToDoTask(description);
+
         tasks.addTask(toDo);
         storage.saveTasks(tasks);
         ui.showTaskAdded(toDo, tasks);

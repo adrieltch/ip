@@ -5,6 +5,7 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.DeadlineTask;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,26 +44,34 @@ class DeadlineCommandTest {
         assertTrue(storage.saved, "Storage should have saved tasks.");
     }
 
-    // --- Minimal test doubles ---
+    /**
+     * To abstract ui for testing
+     */
     private static class TestUi extends Ui {
         boolean messageShown = false;
 
         @Override
         public void showTaskAdded(fatty.task.Task task, TaskList taskList) {
-            messageShown = true; // just mark that it was called
+            // just mark that it was called
+            messageShown = true;
         }
     }
 
+    /**
+     * To abstract storage for testing
+     */
     private static class TestStorage extends Storage {
         boolean saved = false;
 
         public TestStorage() {
-            super("test.txt"); // dummy file path
+            //dummy file path
+            super("test.txt");
         }
 
         @Override
         public void saveTasks(TaskList tasks) {
-            saved = true; // don’t actually write to file
+            // don’t actually write to file
+            saved = true;
         }
     }
 }

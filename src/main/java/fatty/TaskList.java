@@ -30,6 +30,7 @@ public class TaskList {
         if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
             throw new FattyException("Invalid task Number!");
         }
+
         return tasks.get(index - 1);
     }
 
@@ -64,6 +65,7 @@ public class TaskList {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < tasks.size(); i++) {
             int taskNum = i + 1;
             sb.append(taskNum)
@@ -71,6 +73,7 @@ public class TaskList {
                     .append(tasks.get(i))
                     .append("\n");
         }
+
         return sb.toString().trim();
     }
 

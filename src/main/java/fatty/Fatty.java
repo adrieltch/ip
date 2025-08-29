@@ -1,6 +1,7 @@
 package fatty;
 
 import fatty.command.Command;
+
 public class Fatty {
 
     private Storage storage;
@@ -11,6 +12,7 @@ public class Fatty {
     public Fatty(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
+
         try {
             tasks = new TaskList(storage.loadTasks());
         } catch (FattyException e) {
@@ -21,6 +23,7 @@ public class Fatty {
 
     public void run() {
         ui.showWelcome();
+
         boolean isExit = false;
         while (!isExit) {
             try {

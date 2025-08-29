@@ -22,6 +22,7 @@ public class EventCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         EventTask event = new EventTask(description, from, to);
+
         taskList.addTask(event);
         storage.saveTasks(taskList);
         ui.showTaskAdded(event, taskList);
