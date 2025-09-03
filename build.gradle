@@ -46,7 +46,7 @@ test {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("fatty.gui.Launcher")
 }
 
 shadowJar {

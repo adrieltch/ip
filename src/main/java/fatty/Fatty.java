@@ -12,7 +12,9 @@ public class Fatty {
     private TaskList tasks;
     private Ui ui;
 
-
+    public Fatty() {
+        this(TASK_FILE);
+    }
 
     public Fatty(String filePath) {
         ui = new Ui();
@@ -42,8 +44,13 @@ public class Fatty {
         }
     }
 
-    public static void main(String[] args) {
-        new Fatty(TASK_FILE).run();
+    /**
+     *
+     * @param input the user input
+     * @return the String from UI
+     */
+    public String getResponse(String input) {
+        return "Fatty heard: " + input;
     }
 }
 
