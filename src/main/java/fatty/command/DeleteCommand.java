@@ -17,11 +17,11 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         Task removed = taskList.get(index);
 
         taskList.delete(index);
         storage.saveTasks(taskList);
-        ui.showDelete(removed, taskList);
+        return ui.showDelete(removed, taskList);
     }
 }

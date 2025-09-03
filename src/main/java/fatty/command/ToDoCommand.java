@@ -17,7 +17,7 @@ public class ToDoCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws FattyException {
         if (description.isEmpty()) {
             throw new FattyException("The description of a todo cannot be empty.");
         }
@@ -26,6 +26,6 @@ public class ToDoCommand extends Command {
 
         tasks.addTask(toDo);
         storage.saveTasks(tasks);
-        ui.showTaskAdded(toDo, tasks);
+        return ui.showTaskAdded(toDo, tasks);
     }
 }

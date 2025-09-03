@@ -16,10 +16,10 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         taskList.unmark(index);
         storage.saveTasks(taskList);
-        ui.showUnmark(taskList.get(index));
+        return ui.showUnmark(taskList.get(index));
     }
 }
 

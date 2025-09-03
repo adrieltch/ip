@@ -1,8 +1,10 @@
 package fatty;
 
-import fatty.task.Task;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import fatty.task.Task;
+
 
 /**
  * Tracks the tasks of the user.
@@ -15,15 +17,14 @@ public class TaskList {
     }
 
     public TaskList(ArrayList<Task> tasks) {
-
         this.tasks = tasks;
     }
 
     /**
      * Takes in Task object and adds to the List
      *
-     * @param task
-     * @throws FattyException
+     * @param task Task to be added
+     * @throws FattyException No task created or tasklist is full.
      */
     public void addTask(Task task) throws FattyException {
         if (task == null) {
@@ -37,7 +38,7 @@ public class TaskList {
     }
 
     /**
-     * Returns the Task at the given index.
+     * Returns the task at the given index.
      *
      * @param index One Indexed index
      * @return Task at index.
@@ -51,6 +52,11 @@ public class TaskList {
         return tasks.get(index - 1);
     }
 
+    /**
+     * Deletes task at given index.
+     * @param index index of Task
+     * @throws FattyException For invalid index.
+     */
     public void delete(int index) throws FattyException {
         if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
             throw new FattyException("Invalid task Number!");
@@ -59,6 +65,11 @@ public class TaskList {
         tasks.remove(index - 1);
     }
 
+    /**
+     * Marks tasks at given index.
+     * @param index Index of task.
+     * @throws FattyException For invalid index.
+     */
     public void mark(int index) throws FattyException {
         if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
             throw new FattyException("Invalid task number: " + index);
@@ -67,7 +78,12 @@ public class TaskList {
         tasks.get(index - 1).mark();
     }
 
-    public void unmark(int index) throws FattyException{
+    /**
+     * Unmarks task at given index.
+     * @param index 1 index of tasks in tasklist
+     * @throws FattyException Invalid index number
+     */
+    public void unmark(int index) throws FattyException {
         if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
             throw new FattyException("Invalid task number: " + index);
         }
@@ -103,6 +119,11 @@ public class TaskList {
         return sb.toString().trim();
     }
 
+    /**
+     * Find tasks with descriptions that contains description.
+     * @param keyword search for tasks with keyword in description
+     * @return A list of tasks that contain the keyword
+     */
     public TaskList find(String keyword) {
         return new TaskList(tasks.stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))

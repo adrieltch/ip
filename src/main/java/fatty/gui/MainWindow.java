@@ -1,6 +1,7 @@
 package fatty.gui;
 
 import fatty.Fatty;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -31,9 +32,14 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Fatty instance */
     public void setFatty(Fatty fatty) {
         this.fatty = fatty;
+
+        //Display Welcome Message or Error Message for loading Task
+        dialogContainer.getChildren().add(
+                DialogBox.getFattyDialog(fatty.getStartupMessage(), dukeImage)
+        );
     }
 
     /**
@@ -44,10 +50,23 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = fatty.getResponse(input);
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getFattyDialog(response, dukeImage)
         );
+
         userInput.clear();
+
+        if (fatty.shouldExit()) {
+            Platform.runLater(() -> {
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException ignored) { }
+                    Platform.exit();
+                }).start();
+            });
+        }
     }
 }

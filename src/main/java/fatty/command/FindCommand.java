@@ -5,6 +5,9 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 
+/**
+ * Return list of tasks that match keyword.
+ */
 public class FindCommand extends Command {
     private final String keyword;
 
@@ -13,8 +16,8 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         TaskList found = taskList.find(keyword);
-        ui.showFind(found);
+        return ui.showFind(found);
     }
 }

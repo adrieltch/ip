@@ -51,7 +51,7 @@ class DeadlineCommandTest {
         boolean messageShown = false;
 
         @Override
-        public void showTaskAdded(fatty.task.Task task, TaskList taskList) {
+        public String showTaskAdded(fatty.task.Task task, TaskList taskList) {
             // just mark that it was called
             messageShown = true;
         }

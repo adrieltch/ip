@@ -1,88 +1,64 @@
 package fatty;
 
 import fatty.task.Task;
-import java.util.Scanner;
 
 /**
  * Ui deals user interactions. Takes in user input and displays messages.
  */
 public class Ui {
-    private static final String horizontalLine = "_".repeat(75);
-    private final Scanner scanner;
 
-    public Ui() {
-        this.scanner = new Scanner(System.in);
+    /**
+     * Startup greeting
+     * @return string message of greeting
+     */
+    public String showWelcome() {
+        return "Hello skinny legend! I'm fatty.\nWhat can I eat.. I mean do for you?";
+
+    }
+
+    public String showExit() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
-     *Scans user input and return it as a String.
-     *
-     * @return
+     * Show tasks in tasklist
+     * @param taskList Tasklist loaded from local
+     * @return String message of tasklist.
      */
-    public String readCommand() {
-        return scanner.nextLine().trim();
+    public String showTaskList(TaskList taskList) {
+        return "Here are the tasks in your list:\n"
+                + taskList;
     }
 
-
-    public void showWelcome() {
-        System.out.println(horizontalLine + "\n"
-                + "Hello! I'm fatty.\n"
-                + "What can I do for you?\n"
-                + horizontalLine);
+    public String showTaskAdded(Task task, TaskList taskList) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + taskList.size() + " tasks in the list.";
     }
 
-    public void showExit() {
-        System.out.println(horizontalLine + "\n"
-                + "Bye. Hope to see you again soon!\n"
-                + horizontalLine);
+    public String showMark(Task task) {
+        return "Nice! I've marked this task as done:\n" + task;
     }
 
-    public void showTaskList(TaskList taskList) {
-        System.out.println(horizontalLine + "\n"
-                + "Here are the tasks in your list:\n"
-                + taskList + "\n" + horizontalLine);
+    public String showUnmark(Task task) {
+        return "OK! I've marked this task as not done yet:\n" + task;
     }
 
-    public void showTaskAdded(Task task, TaskList taskList) {
-        System.out.println(horizontalLine + "\n" +
-                "Got it. I've added this task:\n" +
-                task + "\n" +
-                "Now you have " + taskList.size() + " tasks in the list.\n" +
-                horizontalLine);
+    public String showDelete(Task task, TaskList taskList) {
+        return "Noted. I've removed this task:\n" + task + "\nNow you have " + taskList.size() + " tasks in the list.";
+    }
+    public String showError(String message) {
+        return "☹ OOPS! Error: " + message;
     }
 
-    public void showMark(Task task) {
-        System.out.println(horizontalLine + "\n" +
-                "Nice! I've marked this task as done:\n" +
-                task + "\n" + horizontalLine);
-    }
-
-    public void showUnmark(Task task) {
-        System.out.println(horizontalLine + "\n" +
-                "OK! I've marked this task as not done yet:\n" +
-                task + "\n" + horizontalLine);
-    }
-
-    public void showDelete(Task task, TaskList taskList) {
-        System.out.println(horizontalLine + "\n" +
-                "Noted. I've removed this task:\n" +
-                task + "\n" +
-                "Now you have " + taskList.size() +
-                " tasks in the list.\n" + horizontalLine);
-    }
-    public void showError(String message) {
-        System.out.println(horizontalLine + "\n"
-                + "☹ OOPS! Error: " + message + "\n"
-                + horizontalLine);
-    }
-    public void showFind(TaskList tasks) {
+    /**
+     * Show tasks that match keyword given.
+     * @param tasks Tasklist that contains tasks that match keyword.
+     * @return Message String
+     */
+    public String showFind(TaskList tasks) {
         if (tasks.size() == 0) {
-            System.out.println(horizontalLine + "\n" +
-                    "There are no tasks that match the keyword!\n" + horizontalLine);
+            return "There are no tasks that match the keyword!";
         } else {
-            System.out.println(horizontalLine + "\n" +
-                    "Here are the matching tasks in your list:" + "\n" +
-                    tasks + "\n" + horizontalLine);
+            return "Here are the matching tasks in your list:" + "\n" + tasks;
         }
 
     }

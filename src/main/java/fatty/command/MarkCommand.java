@@ -16,9 +16,9 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         taskList.mark(index);
         storage.saveTasks(taskList);
-        ui.showMark(taskList.get(index));
+        return ui.showMark(taskList.get(index));
     }
 }

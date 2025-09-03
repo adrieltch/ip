@@ -1,11 +1,12 @@
 package fatty.command;
 
+import java.time.LocalDateTime;
+
 import fatty.FattyException;
 import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.EventTask;
-import java.time.LocalDateTime;
 
 /**
  * Create Event Task with given from and to times.
@@ -15,6 +16,12 @@ public class EventCommand extends Command {
     private final LocalDateTime from;
     private final LocalDateTime to;
 
+    /**
+     * Create event Task in tasklist
+     * @param description task description
+     * @param from time event starts
+     * @param to time event ends
+     */
     public EventCommand(String description, LocalDateTime from, LocalDateTime to) {
         this.description = description;
         this.from = from;
@@ -22,11 +29,11 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         EventTask event = new EventTask(description, from, to);
 
         taskList.addTask(event);
         storage.saveTasks(taskList);
-        ui.showTaskAdded(event, taskList);
+        return ui.showTaskAdded(event, taskList);
     }
 }

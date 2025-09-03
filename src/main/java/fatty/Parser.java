@@ -1,5 +1,9 @@
 package fatty;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import fatty.command.ByeCommand;
 import fatty.command.Command;
 import fatty.command.DeadlineCommand;
@@ -8,12 +12,8 @@ import fatty.command.EventCommand;
 import fatty.command.FindCommand;
 import fatty.command.ListCommand;
 import fatty.command.MarkCommand;
-import fatty.command.UnmarkCommand;
 import fatty.command.ToDoCommand;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import fatty.command.UnmarkCommand;
 
 /**
  * Parser takes in the input from user as a String and parse it to appropriate formats for Commands to execute.
