@@ -7,6 +7,7 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.EventTask;
+import fatty.task.ToDoTask;
 
 /**
  * Create Event Task with given from and to times.
@@ -32,6 +33,7 @@ public class EventCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         EventTask event = new EventTask(description, from, to);
 
+        assert event instanceof EventTask : "task should be EventTask";
         taskList.addTask(event);
         storage.saveTasks(taskList);
         return ui.showTaskAdded(event, taskList);
