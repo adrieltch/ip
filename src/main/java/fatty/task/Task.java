@@ -83,4 +83,8 @@ public abstract class Task {
     public String getDescription() {
         return this.description;
     }
+
+    public boolean isMark() {
+        return this.isMark;
+    }
 }

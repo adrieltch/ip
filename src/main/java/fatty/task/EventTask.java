@@ -1,5 +1,6 @@
 package fatty.task;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
@@ -31,6 +32,14 @@ public class EventTask extends Task{
     public String toDataString() {
         return "E | " + (this.isMark ? "1" : "0") + " | " + this.description + " | "
                 + this.from.format(SAVE_FORMAT) + " | " + this.to.format(SAVE_FORMAT);
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
     }
 }
 

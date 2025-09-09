@@ -3,6 +3,7 @@ package fatty;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import fatty.task.EventTask;
 import fatty.task.Task;
 
 
@@ -37,6 +38,12 @@ public class TaskList {
             throw new FattyException("Task list is full!");
         }
 
+        //clashing task is a task in tasklist that clashes with new task
+        Task clashingTask = detectAnomalies(task);
+        if (clashingTask instanceof Task) {
+            String message = "Task clashes with " + clashingTask + ".";
+            throw new FattyException(message);
+        }
         tasks.add(task);
     }
 
@@ -135,6 +142,40 @@ public class TaskList {
         return new TaskList(tasks.stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toCollection(ArrayList::new)));
+    }
+
+    /**
+     * Checks for Event tasks in tasklist that are UNMARKKED and clashes with new Task
+     * @param task New task to be added
+     * @return null if no clashes, else returns existing task that clashes with event
+     */
+    private Task detectAnomalies(Task task) {
+        boolean isNotEventTask = !(task instanceof EventTask);
+        if (isNotEventTask) {
+            return null;
+        }
+
+        for (Task existing : tasks) {
+            // Only compare with unmarked EventTasks
+            boolean isUnmarkedEventTask = existing instanceof EventTask && !existing.isMark();
+            if (isUnmarkedEventTask) {
+                if (isClashing((EventTask) task, (EventTask) existing)) {
+                    return existing;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if two EventTasks overlap in time.
+     * @param e1
+     * @param e2
+     * @return
+     */
+    private boolean isClashing(EventTask e1, EventTask e2) {
+        return e1.getFrom().isBefore(e2.getTo()) && e1.getTo().isAfter(e2.getFrom());
     }
 }
 
