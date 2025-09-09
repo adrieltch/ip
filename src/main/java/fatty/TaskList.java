@@ -27,10 +27,13 @@ public class TaskList {
      * @throws FattyException No task created or tasklist is full.
      */
     public void addTask(Task task) throws FattyException {
-        if (task == null) {
+        boolean isNullTask = task == null;
+        boolean isFullTasks = tasks.size() > 100;
+
+        if (isNullTask) {
             throw new FattyException("Task cannot be empty!");
         }
-        if (tasks.size() > 100) {
+        if (isFullTasks) {
             throw new FattyException("Task list is full!");
         }
 
@@ -45,7 +48,9 @@ public class TaskList {
      * @throws FattyException For invalid indexes.
      */
     public Task get(int index) throws FattyException {
-        if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
+        boolean isInvalidIndex = index < 1 || index >tasks.size();
+
+        if (tasks.isEmpty() || isInvalidIndex) {
             throw new FattyException("Invalid task Number!");
         }
 
@@ -58,7 +63,9 @@ public class TaskList {
      * @throws FattyException For invalid index.
      */
     public void delete(int index) throws FattyException {
-        if (tasks.isEmpty() || index < 1 || index > tasks.size()) {
+        boolean isInvalidIndex = index < 1 || index >tasks.size();
+
+        if (tasks.isEmpty() || isInvalidIndex) {
             throw new FattyException("Invalid task Number!");
         }
 
