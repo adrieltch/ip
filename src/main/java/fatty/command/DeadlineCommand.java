@@ -7,6 +7,7 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.DeadlineTask;
+import fatty.task.ToDoTask;
 
 /**
  * Command to create deadline task
@@ -29,6 +30,7 @@ public class DeadlineCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) throws FattyException {
         DeadlineTask deadline = new DeadlineTask(description, by);
 
+        assert deadline instanceof DeadlineTask : "task should be DeadlineTask";
         taskList.addTask(deadline);
         storage.saveTasks(taskList);
         return ui.showTaskAdded(deadline, taskList);

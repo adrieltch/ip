@@ -21,9 +21,9 @@ public class ToDoCommand extends Command {
         if (description.isEmpty()) {
             throw new FattyException("The description of a todo cannot be empty.");
         }
-
         ToDoTask toDo = new ToDoTask(description);
 
+        assert toDo instanceof ToDoTask : "task should be ToDoTask";
         tasks.addTask(toDo);
         storage.saveTasks(tasks);
         return ui.showTaskAdded(toDo, tasks);
