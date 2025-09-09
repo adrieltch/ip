@@ -40,7 +40,7 @@ public class TaskList {
 
         //clashing task is a task in tasklist that clashes with new task
         Task clashingTask = detectAnomalies(task);
-        if (clashingTask instanceof Task) {
+        if (clashingTask != null) {
             String message = "Task clashes with " + clashingTask + ".";
             throw new FattyException(message);
         }
@@ -55,7 +55,7 @@ public class TaskList {
      * @throws FattyException For invalid indexes.
      */
     public Task get(int index) throws FattyException {
-        boolean isInvalidIndex = index < 1 || index >tasks.size();
+        boolean isInvalidIndex = index < 1 || index > tasks.size();
 
         if (tasks.isEmpty() || isInvalidIndex) {
             throw new FattyException("Invalid task Number!");
@@ -70,7 +70,7 @@ public class TaskList {
      * @throws FattyException For invalid index.
      */
     public void delete(int index) throws FattyException {
-        boolean isInvalidIndex = index < 1 || index >tasks.size();
+        boolean isInvalidIndex = index < 1 || index > tasks.size();
 
         if (tasks.isEmpty() || isInvalidIndex) {
             throw new FattyException("Invalid task Number!");
