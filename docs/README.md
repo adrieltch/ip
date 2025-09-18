@@ -7,7 +7,7 @@ He is a round and soft personal assistant that can help make sure you are on top
    Mac users: Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 2. Download the latest `.jar` file from [here](https://github.com/adrieltch/ip/releases).
 3. Copy the file to the folder you want to use as the home folder for Fatty.
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar fatty.jar` command to run the application.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar Fatty.jar` command to run the application.
    A GUI similar to the below should appear in a few seconds.
 ![Ui.png](Ui.png)
 5. Type the command in the command box and press Enter to execute it. e.g. typing `list` and pressing Enter will retrieve the task list from Fatty.
