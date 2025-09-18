@@ -7,7 +7,6 @@ import fatty.Storage;
 import fatty.TaskList;
 import fatty.Ui;
 import fatty.task.EventTask;
-import fatty.task.ToDoTask;
 
 /**
  * Create Event Task with given from and to times.
