@@ -1,6 +1,4 @@
 # Fatty User Guide
-
-## User Guide
 Fatty is your personal obese task manager!
 He is a round and soft personal assistant that can help make sure you are on top of your tasks!
 
@@ -14,7 +12,7 @@ He is a round and soft personal assistant that can help make sure you are on top
 ![Ui.png](Ui.png)
 5. Type the command in the command box and press Enter to execute it. e.g. typing `list` and pressing Enter will retrieve the task list from Fatty.
 6. Refer to Features below for details of each command.
-
+   <br/>
 # Features
 
 ## Adding Tasks
